@@ -1,0 +1,84 @@
+{
+  "projects": {
+    "anthropics/claude-code": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "Lum1104/Understand-Anything": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "mukul975/Anthropic-Cybersecurity-Skills": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "microsoft/agent-governance-toolkit": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "langchain-ai/langchain": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "crewAIInc/crewAI": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "AstrBotDevs/AstrBot": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "langchain-ai/langgraph": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "FoundationAgents/MetaGPT": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    },
+    "microsoft/autogen": {
+      "first_seen": "2026-05-31",
+      "last_seen": "2026-05-31",
+      "consecutive_weeks": 1,
+      "weekly_appearances": [
+        "2026-W21"
+      ]
+    }
+  }
+}

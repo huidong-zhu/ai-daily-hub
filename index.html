@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub AI 日报与收藏</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#f6f8fa; color:#24292e; }
+.header { background:linear-gradient(135deg,#24292e 0%,#444d56 100%); color:white; padding:24px 32px; text-align:center; }
+.header h1 { font-size:24px; margin-bottom:4px; }
+.header p { font-size:14px; opacity:.8; }
+.nav { background:white; padding:0; border-bottom:1px solid #e1e4e8; display:flex; justify-content:center; position:sticky; top:0; z-index:10; }
+.nav a { padding:14px 24px; text-decoration:none; color:#586069; font-size:14px; border-bottom:3px solid transparent; cursor:pointer; transition:.2s; }
+.nav a:hover, .nav a.active { color:#24292e; border-bottom-color:#f9826c; }
+.container { max-width:1000px; margin:0 auto; padding:24px 16px; }
+.tab { display:none; }
+.tab.active { display:block; }
+
+/* 统计卡片 */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+.stat-card { background:white; border-radius:8px; padding:20px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+.stat-card .num { font-size:32px; font-weight:bold; color:#0366d6; }
+.stat-card .label { font-size:13px; color:#586069; margin-top:4px; }
+
+/* 项目卡片 */
+.card { background:white; border-radius:8px; padding:24px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+.card h3 { font-size:18px; margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid #f6f8fa; }
+.project-card { background:white; border:1px solid #e1e4e8; border-radius:8px; padding:16px; margin-bottom:12px; transition:.2s; }
+.project-card:hover { box-shadow:0 2px 8px rgba(0,0,0,.1); }
+.project-card .name { font-size:16px; font-weight:600; margin-bottom:6px; }
+.project-card .name a { color:#0366d6; text-decoration:none; }
+.project-card .name a:hover { text-decoration:underline; }
+.project-card .meta { font-size:12px; color:#586069; display:flex; gap:12px; flex-wrap:wrap; }
+.project-card .desc { font-size:13px; color:#586069; margin-top:6px; line-height:1.5; }
+.tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; margin:2px; }
+.tag-cat { background:#e1e4e8; color:#24292e; }
+.tag-lang { background:#f1f8ff; color:#0366d6; }
+
+/* 日报 */
+.daily-list { }
+.daily-item { background:white; border:1px solid #e1e4e8; border-radius:8px; padding:14px 20px; margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:.2s; }
+.daily-item:hover { background:#f6f8fa; }
+.daily-item .date { font-weight:600; }
+.daily-item .size { font-size:12px; color:#586069; }
+.daily-content { display:none; background:#fafbfc; border:1px solid #e1e4e8; border-top:none; border-radius:0 0 8px 8px; padding:20px; margin-top:-8px; margin-bottom:12px; font-size:13px; line-height:1.8; }
+.daily-content.open { display:block; }
+.daily-content h2,.daily-content h3,.daily-content h4 { margin-top:16px; margin-bottom:8px; }
+.daily-content a { color:#0366d6; }
+.daily-content table { border-collapse:collapse; width:100%; margin:12px 0; }
+.daily-content td { padding:6px 10px; border:1px solid #e1e4e8; font-size:12px; }
+.daily-content hr { border:none; border-top:1px solid #e1e4e8; margin:16px 0; }
+
+/* 工具表格 */
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #e1e4e8; }
+th { background:#f6f8fa; font-weight:600; position:sticky; top:0; }
+
+/* 搜索 */
+.search-box { width:100%; padding:10px 14px; border:1px solid #d1d5da; border-radius:6px; font-size:14px; margin-bottom:16px; }
+.search-box:focus { outline:none; border-color:#0366d6; box-shadow:0 0 0 3px rgba(3,102,214,.15); }
+
+/* Footer */
+.footer { text-align:center; color:#586069; font-size:12px; padding:24px; border-top:1px solid #e1e4e8; margin-top:32px; }
+.footer a { color:#0366d6; }
+
+.empty { text-align:center; color:#586069; padding:40px; }
+
+@media (max-width:768px) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .header { padding:16px; }
+    .nav a { padding:10px 14px; font-size:13px; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>GitHub AI Agent / Skill / Workflow</h1>
+    <p>每日精选 AI 项目 | 收藏管理 | 工具清单</p>
+</div>
+
+<div class="nav">
+    <a class="active" onclick="switchTab('home')">首页</a>
+    <a onclick="switchTab('collections')">收藏项目</a>
+    <a onclick="switchTab('daily')">日报归档</a>
+    <a onclick="switchTab('tools')">工具清单</a>
+</div>
+
+<div class="container">
+    <!-- 首页 -->
+    <div class="tab active" id="tab-home">
+        <div class="stats" id="homeStats"></div>
+        <div class="card">
+            <h3>最近日报</h3>
+            <div id="recentDaily"></div>
+        </div>
+        <div class="card">
+            <h3>最新收藏</h3>
+            <div id="recentCollections"></div>
+        </div>
+    </div>
+
+    <!-- 收藏项目 -->
+    <div class="tab" id="tab-collections">
+        <input class="search-box" id="searchCollections" placeholder="搜索项目名称或分类..." oninput="renderCollections()">
+        <div id="collectionsContent"></div>
+    </div>
+
+    <!-- 日报 -->
+    <div class="tab" id="tab-daily">
+        <div class="daily-list" id="dailyContent"></div>
+    </div>
+
+    <!-- 工具 -->
+    <div class="tab" id="tab-tools">
+        <table>
+            <thead><tr><th>工具名称</th><th>类型</th><th>功能描述</th><th>使用频率</th></tr></thead>
+            <tbody id="toolsContent"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="footer">
+    由 <a href="https://github.com/huidong-zhu/ai-daily-hub">Marvis AI</a> 自动生成 | 数据每日更新 | GitHub Pages 托管
+</div>
+
+<script>
+let collections = [];
+let tools = [];
+let dailies = [];
+let history = {};
+
+async function loadData() {
+    try {
+        const [cRes, tRes, dRes, hRes] = await Promise.all([
+            fetch('collections.json').then(r => r.json()).catch(() => ({collections:[]})),
+            fetch('local-tools.json').then(r => r.json()).catch(() => ({tools:[]})),
+            fetch('daily-index.json').then(r => r.json()).catch(() => ({dailies:[]})),
+            fetch('history.json').then(r => r.json()).catch(() => ({projects:{}})),
+        ]);
+        collections = cRes.collections || [];
+        tools = tRes.tools || [];
+        dailies = dRes.dailies || [];
+        history = hRes;
+        renderAll();
+    } catch(e) {
+        console.error('数据加载失败', e);
+        document.getElementById('recentDaily').innerHTML = '<div class="empty">数据加载中，请稍后刷新...</div>';
+    }
+}
+
+function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+    if (name === 'collections') renderCollections();
+    if (name === 'daily') renderDaily();
+    if (name === 'tools') renderTools();
+    if (name === 'home') renderHome();
+}
+
+function renderAll() {
+    renderHome();
+    renderCollections();
+    renderDaily();
+    renderTools();
+}
+
+function renderHome() {
+    // 统计
+    const catSet = new Set(collections.map(c => c.category));
+    document.getElementById('homeStats').innerHTML = `
+        <div class="stat-card"><div class="num">${collections.length}</div><div class="label">收藏项目</div></div>
+        <div class="stat-card"><div class="num">${catSet.size}</div><div class="label">归档分类</div></div>
+        <div class="stat-card"><div class="num">${dailies.length}</div><div class="label">日报数量</div></div>
+        <div class="stat-card"><div class="num">${tools.length}</div><div class="label">本地工具</div></div>
+    `;
+
+    // 最近日报
+    let dh = '';
+    dailies.slice(0,5).forEach(d => {
+        dh += `<div class="daily-item" onclick="location.href='daily/日报_${d.date}.md'">
+            <span class="date">📅 ${d.date}</span>
+            <span class="size">${(d.size/1024).toFixed(1)} KB</span>
+        </div>`;
+    });
+    document.getElementById('recentDaily').innerHTML = dh || '<div class="empty">日报生成中...</div>';
+
+    // 最新收藏
+    let ch = '';
+    collections.slice(-5).reverse().forEach(c => {
+        ch += `<div class="project-card">
+            <div class="name"><a href="${c.html_url}" target="_blank">${c.full_name}</a></div>
+            <div class="meta">
+                <span class="tag tag-cat">${c.category || '未分类'}</span>
+                <span>收藏于 ${c.starred_at || '--'}</span>
+            </div>
+        </div>`;
+    });
+    document.getElementById('recentCollections').innerHTML = ch || '<div class="empty">暂无收藏</div>';
+}
+
+function renderCollections() {
+    const search = (document.getElementById('searchCollections')?.value || '').toLowerCase();
+    const catGroups = {};
+    collections.forEach(c => {
+        if (search && !c.full_name.toLowerCase().includes(search) && !(c.category||'').toLowerCase().includes(search)) return;
+        if (!catGroups[c.category]) catGroups[c.category] = [];
+        catGroups[c.category].push(c);
+    });
+
+    let html = '';
+    for (const [cat, items] of Object.entries(catGroups)) {
+        html += `<div class="card"><h3>📁 ${cat} (${items.length})</h3>`;
+        items.forEach(c => {
+            html += `<div class="project-card">
+                <div class="name"><a href="${c.html_url}" target="_blank">${c.full_name}</a></div>
+                <div class="meta">
+                    <span class="tag tag-cat">${c.category}</span>
+                    <span>收藏于 ${c.starred_at || '--'}</span>
+                </div>
+                ${c.notes ? `<div class="desc">${c.notes}</div>` : ''}
+            </div>`;
+        });
+        html += '</div>';
+    }
+    document.getElementById('collectionsContent').innerHTML = html || '<div class="empty">暂无收藏项目</div>';
+}
+
+function renderDaily() {
+    let html = '';
+    dailies.forEach(d => {
+        html += `<div class="daily-item" onclick="toggleDailyView('${d.date}')">
+            <span class="date">📅 ${d.date} 日报</span>
+            <span class="size">${(d.size/1024).toFixed(1)} KB</span>
+        </div>
+        <div class="daily-content" id="daily-view-${d.date}">
+            <span style="color:#586069;">加载中...</span>
+        </div>`;
+    });
+    document.getElementById('dailyContent').innerHTML = html || '<div class="empty">暂无日报</div>';
+}
+
+let dailyViewCache = {};
+async function toggleDailyView(date) {
+    const el = document.getElementById('daily-view-' + date);
+    if (el.classList.contains('open')) { el.classList.remove('open'); return; }
+    el.classList.add('open');
+    if (dailyViewCache[date]) { el.innerHTML = dailyViewCache[date]; return; }
+    try {
+        const resp = await fetch(`daily/日报_${date}.md`);
+        const md = await resp.text();
+        const html = renderMarkdown(md);
+        dailyViewCache[date] = html;
+        el.innerHTML = html;
+    } catch(e) {
+        el.innerHTML = '<span style="color:#d73a49;">加载失败</span>';
+    }
+}
+
+function renderMarkdown(md) {
+    let html = md
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/^### (.+)$/gm,'<h4>$1</h4>')
+        .replace(/^## (.+)$/gm,'<h3>$1</h3>')
+        .replace(/^# (.+)$/gm,'<h2>$1</h2>')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank">$1</a>')
+        .replace(/^\- (.+)$/gm,'<li>$1</li>')
+        .replace(/^---$/gm,'<hr>')
+        .replace(/\n{2,}/g,'<br><br>')
+        .replace(/\|(.+)\|/g, (m) => {
+            const cells = m.split('|').filter(c => c.trim());
+            let isHeader = cells.every(c => /^[-: ]+$/.test(c.trim()));
+            if (isHeader) return '';
+            return '<tr>' + cells.map(c => `<td style="padding:4px 8px;border:1px solid #e1e4e8;">${c.trim()}</td>`).join('') + '</tr>';
+        })
+        .replace(/(<tr>.+<\/tr>\n?)+/g, '<table>$&</table>');
+    return html;
+}
+
+function renderTools() {
+    let html = '';
+    tools.forEach(t => {
+        html += `<tr>
+            <td><strong>${t.name || '--'}</strong></td>
+            <td><span class="tag tag-cat">${t.type || '--'}</span></td>
+            <td>${t.description || '--'}</td>
+            <td>${t.frequency || '--'}</td>
+        </tr>`;
+    });
+    document.getElementById('toolsContent').innerHTML = html || '<tr><td colspan="4" class="empty">暂无工具记录</td></tr>';
+}
+
+loadData();
+</script>
+</body>
+</html>
