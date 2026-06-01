@@ -2,82 +2,92 @@
   "projects": {
     "anthropics/claude-code": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "Lum1104/Understand-Anything": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "mukul975/Anthropic-Cybersecurity-Skills": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "microsoft/agent-governance-toolkit": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "langchain-ai/langchain": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "crewAIInc/crewAI": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "AstrBotDevs/AstrBot": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "langchain-ai/langgraph": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "FoundationAgents/MetaGPT": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     },
     "microsoft/autogen": {
       "first_seen": "2026-05-31",
-      "last_seen": "2026-05-31",
-      "consecutive_weeks": 1,
+      "last_seen": "2026-06-01",
+      "consecutive_weeks": 2,
       "weekly_appearances": [
-        "2026-W21"
+        "2026-W21",
+        "2026-W22"
       ]
     }
   }
